@@ -1,0 +1,101 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "kotlin-kapt"
+    id "dagger.hilt.android.plugin"
+    id "kotlin-parcelize"
+    id "androidx.navigation.safeargs.kotlin"
+}
+
+android {
+
+    defaultConfig {
+        applicationId "com.pratama.baseandroid"
+        minSdkVersion 22
+        compileSdkVersion 33
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            minifyEnabled false
+            testCoverageEnabled true
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    buildFeatures {
+        viewBinding true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    implementation project(":core-android")
+    implementation project(":routing")
+
+    implementation supportLibraries.kotlin_stdlib
+    implementation supportLibraries.core_ktx
+    implementation supportLibraries.appCompat
+    implementation AndroidLib.androidx_constraintlayout
+
+    implementation AndroidLib.retrofit_android
+    implementation(AndroidLib.gson_converter)
+    implementation AndroidLib.okhttp_logging
+
+    implementation(AndroidLib.groupie)
+    implementation(AndroidLib.groupie_viewbinding)
+
+    implementation(AndroidLib.room)
+    implementation(AndroidLib.room_coroutine)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$Versions.kotlin"
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    kapt(AndroidLib.room_compiler)
+
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$Versions.android_navigation"
+    implementation "androidx.navigation:navigation-ui-ktx:$Versions.android_navigation"
+
+    implementation(AndroidLib.viewmodel_ktx)
+    implementation(AndroidLib.viewmodel_runtime)
+    implementation(AndroidLib.viewmodel_extension)
+
+    kapt(AndroidLib.viewmodel_compiler)
+
+    implementation 'com.intuit.sdp:sdp-android:1.0.6'
+    implementation 'com.intuit.ssp:ssp-android:1.0.6'
+
+    implementation(AndroidLib.timber)
+
+    implementation AndroidLib.hilt
+    kapt AndroidLib.hilt_processor_compiler
+
+    def fragment_version = "1.5.5"
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
+    testImplementation "io.mockk:mockk:$Versions.mockk"
+    testImplementation "androidx.arch.core:core-testing:2.2.0"
+
+}

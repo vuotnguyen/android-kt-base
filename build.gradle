@@ -1,0 +1,49 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    apply from: "build-system/dependencies.gradle"
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$gradle_tools"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+        classpath 'com.github.ben-manes:gradle-versions-plugin:+'
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$android_navigation"
+        classpath "com.vanniktech:gradle-android-junit-jacoco-plugin:0.16.0"
+    }
+}
+
+plugins {
+    id("io.gitlab.arturbosch.detekt").version("1.15.0")
+    id("io.github.cdsap.talaiot.plugin.base") version "1.5.1"
+    id("com.osacky.doctor").version("0.8.1")
+    id("com.autonomousapps.dependency-analysis") version "1.19.0"
+    // id("com.dropbox.affectedmoduledetector").version("0.2.1")
+}
+apply plugin: "com.vanniktech.android.junit.jacoco"
+
+talaiot {
+    publishers {
+        jsonPublisher = true
+    }
+}
+
+allprojects {
+
+    apply from: "$rootDir/config/detekt.gradle"
+    apply from: "$rootDir/config/jacoco.gradle"
+
+    repositories {
+        google()
+        jcenter()
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+
+
